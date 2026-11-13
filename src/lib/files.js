@@ -14,6 +14,9 @@ const unrelatedFiles = new Set([
   "recent_follow_requests.json",
   "recently_unfollowed_profiles.json",
   "close_friends.json",
+  "restricted_profiles.json",
+  "hide_story_from.json",
+  "blocked_profiles.json",
 ]);
 
 export async function readExportSelection(files) {
@@ -78,7 +81,7 @@ export async function readExportSelection(files) {
   for (const kind of ["followers", "following"]) {
     if (!result[kind].length)
       throw new Error(
-        `Missing ${kind} data. Select all followers files and following.json together, or one combined relationship JSON file. Request and close-friends files cannot replace these lists.`,
+        `Missing ${kind} data. Select all followers files and following.json together, or one combined relationship JSON file. Activity and privacy-setting files cannot replace these lists.`,
       );
   }
   if (result.following.length > 1)

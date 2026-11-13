@@ -88,10 +88,23 @@ test("combined file, unrelated activity notice and export guidance below uploade
   await input(page).setInputFiles([
     combined([record("alice")], [record("alice"), record("bob")]),
     upload("close_friends.json", [{ label_values: [] }]),
+    upload("restricted_profiles.json", [record("bob")]),
+    upload("hide_story_from.json", [record("bob")]),
+    upload("blocked_profiles.json", [record("bob")]),
   ]);
   await expect(page.locator(".ignored-files")).toContainText(
     "close_friends.json",
   );
+  await expect(page.locator(".ignored-files")).toContainText(
+    "4 unrelated files ignored",
+  );
+  for (const name of [
+    "restricted_profiles.json",
+    "hide_story_from.json",
+    "blocked_profiles.json",
+  ]) {
+    await expect(page.locator(".ignored-files")).toContainText(name);
+  }
   await compare(page).click();
   await expect(rows(page).first()).toContainText("@bob");
   const bounds = await page.evaluate(() => ({
