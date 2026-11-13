@@ -84,6 +84,43 @@ describe("automatic export selection", () => {
       ]),
     ).rejects.toThrow("Unsupported");
   });
+  it.each([
+    "restricted_profiles.json",
+    "hide_story_from.json",
+    "blocked_profiles.json",
+  ])(
+    "ignores %s without adding its accounts to the comparison",
+    async (name) => {
+      const result = await readExportSelection([
+        file("followers_1.json", [row("alice")]),
+        file("following.json", following),
+        file(name, [row("bob"), row("not_a_follower")]),
+      ]);
+      expect(result.ignored).toEqual([name]);
+      expect(
+        mergeImports(result.followers).accounts.map((account) => account.key),
+      ).toEqual(["alice"]);
+      expect(
+        compareAccounts(
+          mergeImports(result.followers).accounts,
+          mergeImports(result.following).accounts,
+        ).notFollowingBack.map((account) => account.key),
+      ).toEqual(["bob"]);
+    },
+  );
+  it("requires both relationship lists even when all three privacy exports are selected", async () => {
+    const privacyFiles = [
+      "restricted_profiles.json",
+      "hide_story_from.json",
+      "blocked_profiles.json",
+    ].map((name) => file(name, []));
+    await expect(readExportSelection(privacyFiles)).rejects.toThrow(
+      "Missing followers",
+    );
+    await expect(
+      readExportSelection([file("followers_1.json", []), ...privacyFiles]),
+    ).rejects.toThrow("Missing following");
+  });
   it("blocks incomplete selections and multiple following snapshots", async () => {
     await expect(
       readExportSelection([file("followers_1.json", [])]),

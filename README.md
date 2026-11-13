@@ -45,7 +45,7 @@ To compare your own data:
 5. Choose a result category, search by username, and sort A–Z or Z–A. **Export CSV** downloads every account matching that category and search, in the selected order, including results on other pages.
 6. Use **Clear all data** or reload the page to clear the imported data and results. Downloaded CSV files remain on your computer until you delete them.
 
-Choosing files again replaces the entire selection; select both lists and all split files together. Importing your own files replaces the demo completely. A missing or invalid list blocks comparison and clears the old report. The export guidance and Accounts Center link are directly below the upload area. Known request, close-friends, recently-unfollowed, and custom-list files may be selected alongside the relationship files; they are reported as ignored and never used for comparisons. Unknown files cause a helpful error.
+Choosing files again replaces the entire selection; select both lists and all split files together. Importing your own files replaces the demo completely. A missing or invalid list blocks comparison and clears the old report. The export guidance and Accounts Center link are directly below the upload area. Known request, close-friends, recently-unfollowed, custom-list, restricted-profile, hidden-story, and blocked-profile files may be selected alongside the relationship files; they are reported as ignored and never used for comparisons. Unknown files cause a helpful error.
 
 ## Supported JSON structures
 
